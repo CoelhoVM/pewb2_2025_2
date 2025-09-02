@@ -1,37 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Olá mundo Laravel</h1>
-    <p>Vou ficar fera na programação</p>
-    <p>As aulas de programação é muito legal</p>
+@extends('base')
+@section('titulo', 'Formulário Aluno')
+@section('conteudo')
 
-    <table>
-        <thead>
-            <tr>
-                <td>#ID</td>
-                <td>Nome</td>
-                <td>CPF</td>
-                <td>telefone</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($dados as $item)
+    <h2 class="mt-5 mb-5">Listagem de Alunos</h2>
+
+    <div class="row">
+
+        <div class="col-md-9">
+
+            <form action="{{ route('aluno.search') }}" method="post">
+
+                @csrf
+                <div class="row">
+
+                    <div class="col">
+                        <label class="form-label" for=""><strong>Tipo</strong></label>
+                        <select name="tipo" class="form-select">
+                            <option value="nome">Nome</option>
+                            <option value="cpf">CPF</option>
+                            <option value="telefone">Telefone</option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label" for=""><strong>Valor</strong></label>
+                        <input class="form-control" type="text" name="valor">
+                    </div>
+
+                    <div class="col mt-4">
+                        <button type="submit" class="btn btn-success" href="{{ url('/aluno/search') }}">Pesquisar</button>
+                        <a class="btn btn-secondary" href="{{ url('/aluno/create') }}">Novo</a>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <table class="table mt-5">
+            <thead>
                 <tr>
-                    <td>{{$item->id}}</td>
-                    <td>{{$item->nome}}</td>
-                    <td>{{$item->cpf}}</td>
-                    <td>{{$item->telefone}}</td>
+                    <td><strong>#ID</strong></td>
+                    <td><strong>Nome</strong></td>
+                    <td><strong>CPF</strong></td>
+                    <td><strong>telefone</strong></td>
+                    <td><strong>Ação</strong></td>
+                    <td><strong>Ação</strong></td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
+            </thead>
+            <tbody>
+                @foreach ($dados as $item)
+                    <tr>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->nome }}</td>
+                        <td>{{ $item->cpf }}</td>
+                        <td>{{ $item->telefone }}</td>
+                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                        <td>
+                            <form action="{{ route('aluno.destroy', $item->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit"
+                                onclick="return confirm('Deseja excluir o registro?')"
+                                ><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
 
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
+    </div>
+
+@stop

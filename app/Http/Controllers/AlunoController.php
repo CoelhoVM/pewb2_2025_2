@@ -9,7 +9,6 @@ class AlunoController extends Controller
 {
     public function index()
     {
-
         $dados = Aluno::All();
 
         return view('aluno.list', ['dados' => $dados]);
@@ -24,7 +23,6 @@ class AlunoController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
 
         $request->validate([
             'nome' => 'required',
@@ -40,33 +38,42 @@ class AlunoController extends Controller
         return redirect('aluno');
     }
 
-    
+    public function search(Request $request)
+    {
+        if(!empty($request->valor)){
+
+           $dados = Aluno::where(
+                $request->tipo,
+                'like',
+                "%$request->valor%"
+            )->get();
+        }else{
+            $dados = Aluno::All();
+        }
+
+        return view('aluno.list', ['dados' => $dados]);
+    }
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $dado = Aluno::findOrFail($id);
+        $dado->delete();
+
+        return redirect('aluno');
     }
 }
