@@ -6,7 +6,7 @@
 
     <div class="row">
 
-        <div class="col-md-9">
+        <div class="col">
 
             <form action="{{ route('aluno.search') }}" method="post">
 
@@ -27,9 +27,17 @@
                         <input class="form-control" type="text" name="valor">
                     </div>
 
-                    <div class="col mt-4">
-                        <button type="submit" class="btn btn-success" href="{{ url('/aluno/search') }}">Pesquisar</button>
-                        <a class="btn btn-secondary" href="{{ url('/aluno/create') }}">Novo</a>
+                    <div class="col d-flex align-items-end">
+
+                        <div class="me-4">
+                            <button type="submit" class="btn btn-success"
+                                href="{{ url('/aluno/search') }}">Pesquisar</button>
+                        </div>
+
+                        <div>
+                            <a class="btn btn-secondary" href="{{ url('/aluno/create') }}">Novo</a>
+                        </div>
+
                     </div>
 
                 </div>
@@ -60,14 +68,17 @@
                         <td>{{ $item->nome }}</td>
                         <td>{{ $item->cpf }}</td>
                         <td>{{ $item->telefone }}</td>
-                        <td><i class="fa-solid fa-pen-to-square"></i></td>
+                        <td>
+                            <a href="{{ route('aluno.edit', $item->id) }}" class="btn btn-warning">
+                                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> </a>
+                        </td>
                         <td>
                             <form action="{{ route('aluno.destroy', $item->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit"
-                                onclick="return confirm('Deseja excluir o registro?')"
-                                ><i class="fas fa-trash"></i></button>
+                                    onclick="return confirm('Deseja excluir o registro?')"><i
+                                        class="fas fa-trash"></i></button>
                             </form>
                         </td>
 
