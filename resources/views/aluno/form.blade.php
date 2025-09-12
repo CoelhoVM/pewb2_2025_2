@@ -13,7 +13,7 @@
         }
     @endphp
 
-    <form action="{{ $action }}" method="post">
+    <form action="{{ $action }}" method="post" enctype="multipart/form-data">
 
         @csrf
 
@@ -38,6 +38,34 @@
             <div class="col">
                 <label  class="mb-3" for=""><strong>Telefone</strong></label>
                 <input class="form-control" type="text" name="telefone"  value="{{ old('id', $dado->telefone ?? '')}}">
+            </div>
+
+            <div class="col">
+
+                <label  class="mb-3" for=""><strong>Categoria</strong></label>
+                <select name="categoria_id" >
+
+                    <option value="">Selecione</option>
+
+                    @foreach($categorias as $item)
+
+                       <option value="{{ $item->id }}"
+                            {{ old('categoria_id', $item->categoria_id ?? '') == $item->id ? 'selected' : ''  }}>
+                            {{ $item->nome }}
+                       </option>
+
+                    @endforeach
+
+                </select>
+            </div>
+
+            @php
+                $nome_imagem = !empty($dado->imagem) ? $dado->imagem : 'sem_imagem.jpg';
+            @endphp
+            <div class="col">
+                <label  class="mb-3" for=""><strong>Imagem</strong></label>
+                <img src="/storage/{{$nome_imagem}}" width="200px" height="200px" alt="imagem">
+                <input class="form-control" type="file" name="imagem"  value="{{ old('id', $dado->imagem ?? '')}}">
             </div>
 
         </div>
