@@ -53,21 +53,29 @@
         <table class="table mt-5">
             <thead>
                 <tr>
+                    <td><strong>Imagem</strong></td>
                     <td><strong>#ID</strong></td>
                     <td><strong>Nome</strong></td>
                     <td><strong>CPF</strong></td>
                     <td><strong>telefone</strong></td>
+                    <td><strong>Categoria</strong></td>
                     <td><strong>Ação</strong></td>
                     <td><strong>Ação</strong></td>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($dados as $item)
+                    @php
+                        $nome_imagem = !empty($item->imagem) ? $item->imagem : 'sem_imagem.jpg';
+                    @endphp
                     <tr>
+                        <td><img src="/storage/{{ $nome_imagem }}" width="100px" height="100px" alt="imagem"></td>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->nome }}</td>
                         <td>{{ $item->cpf }}</td>
                         <td>{{ $item->telefone }}</td>
+                        <td>{{ $item->categoria->nome}}</td>
+
                         <td>
                             <a href="{{ route('aluno.edit', $item->id) }}" class="btn btn-warning">
                                 <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> </a>

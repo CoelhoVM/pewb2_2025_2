@@ -23,11 +23,6 @@ class AlunoFactory extends Factory
             'telefone' => $this->faker->phoneNumber(),
             'imagem' => null,
             'categoria_id' => (CategoriaAluno::All()->random())->id,
-
-
-
-
-
         ];
     }
 }

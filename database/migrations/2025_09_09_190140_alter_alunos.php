@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::table('alunos', function (Blueprint $table) {
             $table->string('imagem', 150)->nullable();
-            $table->foreignId('categoria_aluno_id')
+            $table->foreignId('categoria_id')
             ->after('telefone')
             ->constrained('categoria_alunos');
         });
